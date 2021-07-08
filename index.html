@@ -13,9 +13,13 @@
       html {
         font-size: 62.5%;
       }
+      #app {
+        width: 100%;
+        height: 100%;
+      }
       .box {
-        width: 40rem;
-        height: 40rem;
+        width: 35rem;
+        height: 35rem;
         margin: 0 auto;
       }
       .item {
@@ -27,20 +31,25 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        font-size: 4rem;
       }
       .time {
         text-align: center;
-        font-size: 8rem;
+        font-size: 4rem;
+        height: 8rem;
+        line-height: 8rem;
       }
       .clear {
         clear: both;
       }
       .current {
-        font-size: 10rem;
+        font-size: 4rem;
+        text-align: center;
+        margin-top: 5rem;
       }
       .begin {
         width: 100%;
-        height: 200px;
+        margin-top: 5rem;
       }
       .begin-btn {
         display: block;
@@ -48,20 +57,20 @@
         height: 10rem;
         margin: 1rem auto;
         border-radius: 10rem;
-        font-size: 10rem;
+        font-size: 4rem;
       }
     </style>
 </head>
 <body>
   <div id="app">
+    <p class="time">{{timeFormat}}</p>
     <div class="box">
-      <p class="time">{{timeFormat}}</p>
       <div class="item" v-for="item of newArr" @click="clickItem(item)">{{item}}</div>
       <div class="clear"></div>
-      <div class="current">Next：{{nextNum}}</div>
-      <div class="begin">
-        <button class="begin-btn" @click="btnClick(0)">go</button>
-      </div>
+    </div>
+    <div class="current">Next：{{nextNum}}</div>
+    <div class="begin">
+      <button class="begin-btn" @click="btnClick(0)">go</button>
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
