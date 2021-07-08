@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schulte</title>
+    <style>
+      *{
+        padding: 0;
+        margin: 0;
+      }
+      html {
+        font-size: 62.5%;
+      }
+      .box {
+        width: 40rem;
+        height: 40rem;
+        margin: 0 auto;
+      }
+      .item {
+        width: 8rem;
+        height: 8rem;
+        box-sizing: border-box;
+        border: 1px solid #000;
+        float: left;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .time {
+        text-align: center;
+        font-size: 5rem;
+      }
+      .clear {
+        clear: both;
+      }
+      .begin {
+        width: 100%;
+        height: 200px;
+      }
+      .begin-btn {
+        display: block;
+        width: 6rem;
+        height: 6rem;
+        margin: 1rem auto;
+        border-radius: 6rem;
+      }
+    </style>
+</head>
+<body>
+  <div id="app">
+    <div class="box">
+      <p class="time">{{timeFormat}}</p>
+      <div class="item" v-for="item of newArr" @click="clickItem(item)">{{item}}</div>
+      <div class="clear"></div>
+      <div class="current">Next：{{nextNum}}</div>
+      <div class="begin">
+        <button class="begin-btn" @click="btnClick(0)">go</button>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        oArr: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25],
+        newArr: [],
+        nextNum: 1,
+        choicedArr: [], // 已选择
+        timeFormat: '00:00:00',
+        time: 0,
+        playTag: ''
+      },
+      created() {
+        this.arrInit()
+      },
+      methods: {
+        arrInit () {
+          let arr = this.oArr;
+          for (let i = arr.length;i > 0;i--) {
+            var num = arr[Math.ceil(Math.random() *arr.length) - 1];
+            console.log(num)
+            this.newArr.push(num);
+            arr.splice(arr.indexOf(num), 1);
+            console.log(arr)
+          }
+        },
+        btnClick (val) {
+          this.playTag = setInterval(() => {
+            this.time += 10;
+            this.formatTime(this.time);
+          }, 100)
+        },
+        stop () {
+          clearInterval(this.playTag)
+        },
+        time () {
+          this.time += 10;
+          this.formatTime(this.time);
+        },
+        formatTime(time) {
+          let m = Math.floor(time / 6000)
+          let s = Math.floor(time % 6000 / 100)
+          m = m < 10 ? '0' + m : m;
+          s = s < 10 ? '0' + s : s;
+          let ms = time % 100
+          this.timeFormat = `${m} : ${s} : ${ms}`
+        },
+        clickItem(val) {
+          if (val == this.choicedArr.length + 1) {
+            this.nextNum = val + 1;
+            this.choicedArr.push(val);
+          }
+          if(val == 25) {
+            this.stop()
+          }
+        }
+      }
+    })
+  </script>
+</body>
+</html>
